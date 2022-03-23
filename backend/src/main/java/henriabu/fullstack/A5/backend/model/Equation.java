@@ -6,7 +6,7 @@ public class Equation {
     private double num1;
     private double num2;
     private char op;
-    private String answer;
+    private double answer;
    
 
     public int getId(){
@@ -40,12 +40,25 @@ public class Equation {
         this.op = op;
     }
 
-    public String getAnswer() {
+    public double getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String anwser) {
-        this.answer = anwser;
+    public double calculateAnswer(){
+      
+        if (op == '+'){
+            answer = num1 + num2;
+        }
+        else if (op == '-'){
+            answer = num1 - num2;
+        }
+        else if (op == '*'){
+            answer = num1 * num2;
+        }
+        else if (op == '/'){
+            answer = num1 / num2;
+        }
+        return answer;
     }
 
 

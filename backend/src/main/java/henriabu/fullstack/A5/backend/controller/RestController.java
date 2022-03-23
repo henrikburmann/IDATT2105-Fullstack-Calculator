@@ -49,6 +49,7 @@ public class RestController {
     @PostMapping("/calculation")
     public ResponseEntity<String> createEquation(@RequestBody Equation equation){
         try{
+            equation.calculateAnswer();
             repository.save(equation);
             return new ResponseEntity<>("Equation was added", HttpStatus.CREATED);
         }

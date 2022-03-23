@@ -266,3 +266,21 @@ SELECT * from equation [42102-200]
 2022-03-22 20:57:27 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "EQUATION" not found; SQL statement:
 SELECT * from equation [42102-200]
+2022-03-23 09:01:34 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "INSERT INTO EQUATIONS (ID, NUM1, NUM2, OPERATOR, ANSWER) VALUES (COUNT()[*] + 1, ?, ?, ?, ?)"; SQL statement:
+INSERT INTO EQUATIONS (id, num1, num2, operator, answer) VALUES (Count() + 1, ?, ?, ?, ?) [42000-200]
+2022-03-23 10:33:33 jdbc[14]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE EQUATIONS(
+ID INT PRIMARY KEY AUTO[*] INCREMENT,
+NUM1 DOUBLE NOT NULL,
+NUM2 DOUBLE NOT NULL,
+OPERATOR CHARACTER NOT NULL,
+ANSWER DOUBLE
+)"; expected "HASH, AUTO_INCREMENT, NOT, NULL, COMMENT, CHECK, REFERENCES, ,, )"; SQL statement:
+create table equations(
+id int primary key auto increment,
+num1 double not null,
+num2 double not null,
+operator character not null,
+answer double
+) [42001-200]

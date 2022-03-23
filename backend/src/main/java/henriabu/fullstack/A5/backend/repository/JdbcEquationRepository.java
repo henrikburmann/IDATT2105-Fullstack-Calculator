@@ -1,5 +1,6 @@
 package henriabu.fullstack.A5.backend.repository;
 
+import java.sql.ResultSet;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.BeanProperty;
@@ -21,8 +22,8 @@ public class JdbcEquationRepository implements EquationRepository {
     @Override
     public int save(Equation equation){
         return jdbcTemplate.update(
-            "INSERT INTO EQUATIONS (id, num1, num2, operator, answer) VALUES (?, ?, ?, ?, ?)",
-            new Object[]{ equation.getId(), equation.getNum1(), equation.getNum2(), equation.getOp(), equation.getAnswer()}
+            "INSERT INTO EQUATIONS (num1, num2, operator, answer) VALUES (?, ?, ?, ?)",
+            new Object[]{ equation.getNum1(), equation.getNum2(), equation.getOp(), equation.getAnswer()}
         );
     }
     
