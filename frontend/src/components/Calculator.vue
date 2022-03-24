@@ -1,40 +1,25 @@
 <template>
   <div class="container">
     <label class="tekstfelt"> {{ displayValue }}</label>
-    <button @click="append(1)" class="one">1</button>
-    <button @click="append(2)" class="two">2</button>
-    <button @click="append(3)" class="three">3</button>
-    <button @click="append(4)" class="four">4</button>
-    <button @click="append(5)" class="five">5</button>
-    <button @click="append(6)" class="six">6</button>
-    <button @click="append(7)" class="seven">7</button>
-    <button @click="append(8)" class="eight">8</button>
-    <button @click="append(9)" class="nine">9</button>
-    <button @click="append(0)" class="zero">0</button>
-    <button @click="append('.')" class="comma">.</button>
-    <button @click="append('+')" class="pluss">+</button>
-    <button @click="append('-')" class="minus">-</button>
-    <button @click="append('*')" class="times">*</button>
-    <button @click="append('/')" class="divided">/</button>
+    
+    <button v-for="val in buttonValues" :key="val" @click="append(val)"> {{ val }}</button> 
     <button @click="equals" class="equals">=</button>
     <button @click="clear" class="clear">C</button>
   </div>
   <ul class="log">
     <li v-for="e in log" :key="e">{{ e }}</li>
   </ul>
-  <select name="Number of equations" id="selectNumberOfEquations" onchange="printHello">
-      <option value="1" selected="selected"> 1 </option>
-      <option value="3"> 3 </option>
-      <option value="5"> 5 </option>
-
+  <select @change="getNumberOfEquationsValue" name="Number of equations" id="selectNumberOfEquations" >
+      <option value="5" selected="selected"> 5 </option>
+      <option value="10"> 10 </option>
+      <option value="15"> 15 </option>
+ 
   </select>
 </template>
 
 <script>
 import { sendExpression } from "@/services/api.js"
 import { getLog } from "@/services/api.js"
-// import { getLastExporession } from "@/services/api.js"
-// import { getAll } from "@/services/api.js"
 
 export default {
   name: "calculator",
@@ -42,6 +27,9 @@ export default {
   data() {
     return {
       displayValue: "",
+      buttonValues: [
+        7, 8, 9, '+', 4, 5, 6, '-', 1, 2, 3, '*', 0, '.', '/'
+      ],
       log: [],
       operator: null,
       prevValue: "",
@@ -53,17 +41,17 @@ export default {
       numberOfEquationsShown: null,
       newEq: true,
       lastIsDot: false,
+      
     };
+  },
+  mounted(){
+    this.getNumberOfEquationsValue()
   },
   methods: {
     getValue(button) {
       this.$emit("target-value", button.target.value);
     },
-    printHello(){
-        console.log("----------------------------Hei-------------------------------")
-    },
     async getNumberOfEquationsValue(){
-      console.log("----------------------------Hei-------------------------------")
       this.numberOfEquationsShown = document.getElementById("selectNumberOfEquations").value
       this.log = await getLog(this.numberOfEquationsShown);
     },
@@ -113,22 +101,21 @@ export default {
     },
     async equals() {
       this.getNumberOfEquationsValue(),
-      console.log(this.numberOfEquationsShown)
-      this.values.push(this.currentValue), 
-      console.log(this.values.length);
-      // let equation = this.displayValue;
+
+      this.values.push(this.currentValue);
+
       let num1 = this.values[0];
       let num2 = this.values[1];
       let op = this.ops[0];
+
       let ex = await sendExpression(num1, num2, op);
       console.log(ex);
       this.log.push(num1 + " " + op + " " + num2)
-      // let result = await getLastExporession();
-      // console.log(result)
-      // this.displayValue = result
+
       this.displayValue = ex;
       this.clearValues()
-      // this.currentValue = result
+      this.newEq = true
+    
       
     },
   },
@@ -144,13 +131,6 @@ export default {
   grid-auto-columns: 1fr 1fr 1fr 1fr;
   grid-auto-rows: 1fr 1fr 1fr 1fr;
   margin: auto;
-  grid-template-areas:
-    "tekstfelt tekstfelt tekstfelt tekstfelt"
-    "seven eight nine pluss"
-    "four five six minus"
-    "one two three time"
-    "nill times divided clear"
-    "equals equals equals equals";
 }
 
 button {
@@ -162,54 +142,15 @@ button {
   grid-area: tekstfelt;
   width: 100%;
   text-align: center;
+  grid-row: 1 / 2;
+  grid-column: 1/5;
 }
 button {
   margin: 1px;
 }
-.one {
-  grid-area: one;
-}
-.two {
-  grid-area: two;
-}
-.three {
-  grid-area: three;
-}
-.four {
-  grid-area: four;
-}
-.five {
-  grid-area: five;
-}
-.six {
-  grid-area: six;
-}
-.seven {
-  grid-area: seven;
-}
-.eight {
-  grid-area: eight;
-}
-.nine {
-  grid-area: nine;
-}
-.pluss {
-  grid-area: pluss;
-}
-.zero {
-  grid-area: nill;
-}
-.dot {
-  grid-area: comma;
-}
-
-.minus {
-  grid-area: minus;
-}
-.times {
-  grid-area: time;
-}
 .equals {
   grid-area: equals;
+  grid-row: 6/7;
+  grid-column: 1/5;
 }
 </style>
