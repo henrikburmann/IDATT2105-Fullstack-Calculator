@@ -1,7 +1,8 @@
 package henriabu.fullstack.A5.backend.repository;
 
 import java.sql.ResultSet;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.List; 
 
 import com.fasterxml.jackson.databind.BeanProperty;
 
@@ -15,10 +16,22 @@ import henriabu.fullstack.A5.backend.model.Equation;
 public class JdbcEquationRepository implements EquationRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+    
     @Override
     public List<Equation> findAll() {
-        return jdbcTemplate.query("SELECT * from equation", BeanPropertyRowMapper.newInstance(Equation.class));
+        return jdbcTemplate.query("SELECT * from equations", BeanPropertyRowMapper.newInstance(Equation.class));
     }
+
+    @Override
+    public List<String> findAllExpressions(){
+        List<String> expressions = new ArrayList<>();
+        for (Equation equation : findAll()) {
+            String expression = equation.getNum1() + " " + equation.getOp() + " " + equation.getNum2() + " = " + equation.getAnswer();
+            expressions.add(expression);
+        }  
+        return expressions;
+    }
+
     @Override
     public int save(Equation equation){
         return jdbcTemplate.update(

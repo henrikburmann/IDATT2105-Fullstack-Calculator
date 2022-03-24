@@ -6,9 +6,17 @@ export function sendExpression(num1, num2, op){
         "num1": num1,
         "num2": num2,
         "op": op
+    }).then((answer) => {
+        return answer.data;
     })
 }
 
+export function getLog(numberOfEquations){
+    console.log(numberOfEquations);
+    return axios.get("http://localhost:8080/calculation").then((log) =>{
+        return log.data;
+    });
+}
 // export function getLastExporession(){
 //     return axios.get("http://localhost:8080/calculation").then((answer) =>
 //     {

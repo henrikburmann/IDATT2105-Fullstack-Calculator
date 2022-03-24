@@ -38,6 +38,7 @@ public class RestController {
             repository.findAll().forEach(equations::add);
         }
         catch(Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         for (Equation equation : equations) {
@@ -47,11 +48,13 @@ public class RestController {
     }
 
     @PostMapping("/calculation")
-    public ResponseEntity<String> createEquation(@RequestBody Equation equation){
+    public ResponseEntity<Double> createEquation(@RequestBody Equation equation){
         try{
             equation.calculateAnswer();
+
             repository.save(equation);
-            return new ResponseEntity<>("Equation was added", HttpStatus.CREATED);
+
+            return new ResponseEntity<>(equation.calculateAnswer(), HttpStatus.CREATED);
         }
         catch(Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

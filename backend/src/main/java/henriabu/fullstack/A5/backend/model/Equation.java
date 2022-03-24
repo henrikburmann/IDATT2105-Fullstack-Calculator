@@ -7,7 +7,6 @@ public class Equation {
     private double num2;
     private char op;
     private double answer;
-   
 
     public int getId(){
         return id;
@@ -60,6 +59,8 @@ public class Equation {
         }
         return answer;
     }
+
+     
 
 
 }

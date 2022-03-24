@@ -26,6 +26,7 @@
 
 <script>
 import { sendExpression } from "@/services/api.js"
+import { getLog } from "@/services/api.js"
 // import { getLastExporession } from "@/services/api.js"
 // import { getAll } from "@/services/api.js"
 
@@ -103,12 +104,14 @@ export default {
       let op = this.ops[0];
       let ex = await sendExpression(num1, num2, op);
       console.log(ex);
+      this.log.push(num1 + " " + op + " " + num2)
       // let result = await getLastExporession();
       // console.log(result)
       // this.displayValue = result
-      // this.clearValues()
+      this.displayValue = ex;
+      this.clearValues()
       // this.currentValue = result
-      // this.log = await getAll();
+      this.log = await getLog(5);
     },
   },
 };
