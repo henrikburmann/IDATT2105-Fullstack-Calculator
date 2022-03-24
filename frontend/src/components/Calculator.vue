@@ -22,6 +22,12 @@
   <ul class="log">
     <li v-for="e in log" :key="e">{{ e }}</li>
   </ul>
+  <select name="Number of equations" id="selectNumberOfEquations" onchange="printHello">
+      <option value="1" selected="selected"> 1 </option>
+      <option value="3"> 3 </option>
+      <option value="5"> 5 </option>
+
+  </select>
 </template>
 
 <script>
@@ -44,6 +50,7 @@ export default {
       operators: ["+", "-", "*", "/"],
       ops: [],
       values: [],
+      numberOfEquationsShown: null,
       newEq: true,
       lastIsDot: false,
     };
@@ -52,6 +59,15 @@ export default {
     getValue(button) {
       this.$emit("target-value", button.target.value);
     },
+    printHello(){
+        console.log("----------------------------Hei-------------------------------")
+    },
+    async getNumberOfEquationsValue(){
+      console.log("----------------------------Hei-------------------------------")
+      this.numberOfEquationsShown = document.getElementById("selectNumberOfEquations").value
+      this.log = await getLog(this.numberOfEquationsShown);
+    },
+
     clear() {
       (this.displayValue = ""),
         (this.prevValue = ""),
@@ -96,6 +112,8 @@ export default {
       } else this.lastIsDot = false;
     },
     async equals() {
+      this.getNumberOfEquationsValue(),
+      console.log(this.numberOfEquationsShown)
       this.values.push(this.currentValue), 
       console.log(this.values.length);
       // let equation = this.displayValue;
@@ -111,7 +129,7 @@ export default {
       this.displayValue = ex;
       this.clearValues()
       // this.currentValue = result
-      this.log = await getLog(5);
+      
     },
   },
 };

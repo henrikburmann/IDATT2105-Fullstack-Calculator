@@ -26,7 +26,7 @@ public class JdbcEquationRepository implements EquationRepository {
     public List<String> findAllExpressions(){
         List<String> expressions = new ArrayList<>();
         for (Equation equation : findAll()) {
-            String expression = equation.getNum1() + " " + equation.getOp() + " " + equation.getNum2() + " = " + equation.getAnswer();
+            String expression = equation.getNum1() + " " + equation.getOperator() + " " + equation.getNum2() + " = " + equation.getAnswer();
             expressions.add(expression);
         }  
         return expressions;
@@ -36,8 +36,12 @@ public class JdbcEquationRepository implements EquationRepository {
     public int save(Equation equation){
         return jdbcTemplate.update(
             "INSERT INTO EQUATIONS (num1, num2, operator, answer) VALUES (?, ?, ?, ?)",
-            new Object[]{ equation.getNum1(), equation.getNum2(), equation.getOp(), equation.getAnswer()}
+            new Object[]{ equation.getNum1(), equation.getNum2(), equation.getOperator(), equation.getAnswer()}
         );
+    }
+
+    @Override public List<Equation> findXNumberOfExporessions(int i){
+        return jdbcTemplate.query("select top " + i + " * from equations order by id desc", BeanPropertyRowMapper.newInstance(Equation.class));
     }
     
 }

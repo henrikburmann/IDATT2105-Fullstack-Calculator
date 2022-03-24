@@ -5,15 +5,15 @@ export function sendExpression(num1, num2, op){
     {
         "num1": num1,
         "num2": num2,
-        "op": op
+        "operator": op
     }).then((answer) => {
         return answer.data;
     })
 }
 
-export function getLog(numberOfEquations){
-    console.log(numberOfEquations);
-    return axios.get("http://localhost:8080/calculation").then((log) =>{
+export function getLog(number){
+    
+    return axios.get("http://localhost:8080/calculation?numberOfEquations=" + number).then((log) =>{
         return log.data;
     });
 }

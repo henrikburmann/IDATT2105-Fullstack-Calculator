@@ -8,4 +8,5 @@ public interface EquationRepository {
     int save(Equation equation);
     List<Equation> findAll();
     List<String> findAllExpressions();
+    List<Equation> findXNumberOfExporessions(int numberOfEquations);
 }

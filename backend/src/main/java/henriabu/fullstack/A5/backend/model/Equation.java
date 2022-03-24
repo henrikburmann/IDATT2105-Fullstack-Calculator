@@ -5,7 +5,7 @@ public class Equation {
     private int id;
     private double num1;
     private double num2;
-    private char op;
+    private String operator;
     private double answer;
 
     public int getId(){
@@ -31,33 +31,36 @@ public class Equation {
         this.num2 = num2;
     }
 
-    public char getOp() {
-        return op;
+    public String getOperator() {
+        return operator;
     }
 
-    public void setOp(char op) {
-        this.op = op;
+    public void setOperator(String operator) {
+        this.operator = operator;
     }
 
     public double getAnswer() {
         return answer;
     }
 
+    public String writeExpression(){
+        return num1 + " " + operator + " " + num2 + " = " + calculateAnswer();
+    }
     public double calculateAnswer(){
       
-        if (op == '+'){
-            answer = num1 + num2;
+        if (operator.equals("+")){
+            this.answer = this.num1 + this.num2;
         }
-        else if (op == '-'){
-            answer = num1 - num2;
+        else if (operator.equals("-")){
+            this.answer = this.num1 - this.num2;
         }
-        else if (op == '*'){
-            answer = num1 * num2;
+        else if (operator.equals("*")){
+            this.answer = this.num1 * this.num2;
         }
-        else if (op == '/'){
-            answer = num1 / num2;
+        else if (operator.equals("/")){
+            this.answer = this.num1 / this.num2;
         }
-        return answer;
+        return this.answer;
     }
 
      
